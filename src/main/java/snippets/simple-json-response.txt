@@ -1,0 +1,5 @@
+ 	{
+		id: 6,
+		uri: "booking",
+		description: "A description"
+	}
