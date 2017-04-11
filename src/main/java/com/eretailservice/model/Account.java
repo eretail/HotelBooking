@@ -20,7 +20,7 @@ public class Account {
     @GeneratedValue
     private Long id;
 
-    public Set<Booking> getBookmarks() {
+    public Set<Booking> getBookings() {
         return booking;
     }
 

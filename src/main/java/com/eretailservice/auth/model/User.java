@@ -18,6 +18,14 @@ public class User {
         return id;
     }
 
+    public User(Long id) {
+		this.id = id;
+	}
+    
+	public User(String name) {
+		this.username = name;
+	}
+
     public void setId(Long id) {
         this.id = id;
     }

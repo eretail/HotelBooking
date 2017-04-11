@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>Booking Events</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <div th:if="${not #lists.isEmpty(events)}">
+        <h2>Event List</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Event Id</th>
+<!--                 <th>Calendar Id</th>	-->
+                 <th>Title</th>
+                <th>Event Date</th>
+                <th>Location</th>
+                <th>Attendee List</th>
+                <th>Reminder Date</th>
+                <th>Sent Reminder?</th>
+                
+                <th>View</th>
+                <th>Edit</th>
+                <th>Delete</th>
+                
+            </tr>
+            <tr th:each="event : ${events}">
+                <td th:text="${event.id}"><a href="/event/${event.id}">Id</a></td>
+                <td th:text="${event.eventId}">Event Id</td>
+                <!-- <td th:text="${event.calendarId}">Calendar Id</td> -->
+				<td th:text="${event.title}">Title</td>
+				<td th:text="${event.eventDateTime}">Event Date</td>
+				<td th:text="${event.location}">Location</td>
+				<td th:text="${event.attendeeList}">Attendee List</td>
+				<td th:text="${event.eventDateTime}">Event Date</td>
+				<td th:text="${event.reminderTime}">Reminder Date</td>
+				<td th:text="${event.hasReminderSent}">Sent Reminder?</td>
+
+ 				<td><a th:href="${ '/event/' + event.id}">View</a></td>
+                <td><a th:href="${'/event/edit/' + event.id}">Edit</a></td>
+                <td><a th:href="${'/event/delete/' + event.id}">Remove</a></td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>

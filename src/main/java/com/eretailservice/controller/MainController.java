@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,10 @@ import com.eretailservice.model.Resource;
 import com.eretailservice.repository.EventRepository;
 import com.eretailservice.repository.ResourceRepository;
 
+
+@EnableJpaRepositories(
+		basePackages = {"com.eretailservice.repository.EventRepository","com.eretailservice.repository.ResourceRepository"}
+	)
 @RestController
 public class MainController {
 	

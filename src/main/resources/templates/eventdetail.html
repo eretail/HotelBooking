@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-    <title>Resource Renting Systems</title>
+    <title>Resource Renting</title>
 
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
@@ -11,77 +11,65 @@
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
     <h2>Event Details</h2>
-    <div>
-        <form class="form-horizontal" th:object="${event}" th:action="@{/event}" method="post">
-            <input type="hidden" th:field="*{id}"/>
-            <input type="hidden" th:field="*{version}"/>
-
+        <div>
+            <form class="form-horizontal">
             <div class="form-group">
                 <label class="col-sm-2 control-label">Event Id:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{eventId}"/>
+                    <p class="form-control-static" th:text="${event.eventId}"/>
                 </div>
             </div>
-<!--             <div class="form-group">
+
+            <div class="form-group">
                 <label class="col-sm-2 control-label">Calendar Id:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{calendarId}"/>
+                    <p class="form-control-static" th:text="${event.calendarId}"/>
                 </div>
-            </div> -->
+            </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">Title:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{title}"/>
+                    <p class="form-control-static" th:text="${event.title}"/>
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="col-sm-2 control-label">Event Date Time:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{eventDateTime}"/>
+                    <p class="form-control-static" th:text="${event.eventDateTime}"/>
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="col-sm-2 control-label">Event Location:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{location}"/>
+                    <p class="form-control-static" th:text="${event.location}"/>
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="col-sm-2 control-label">Event Attendees:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{attendeeList}"/>
+                    <p class="form-control-static" th:text="${event.attendeeList}"/>
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="col-sm-2 control-label">Description:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{detailDescription}"/>
+                    <p class="form-control-static" th:text="${event.detailDescription}"/>
                 </div>
             </div>
-
-
             <div class="form-group">
                 <label class="col-sm-2 control-label">Reminder Time:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{reminderTime}"/>
+                    <p class="form-control-static" th:text="${event.reminderTime}"/>
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="col-sm-2 control-label">Description:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{hasReminderSent}"/>
+                    <p class="form-control-static" th:text="${event.hasReminderSent}"/>
                 </div>
             </div>
-
-             <div class="row">
-                <button type="submit" class="btn btn-default">Submit</button>
-            </div>
-        </form>
+                
+          </form>
     </div>
 </div>
 

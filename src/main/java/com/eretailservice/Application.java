@@ -12,8 +12,10 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.eretailservice.model.APlace;
@@ -35,6 +37,8 @@ import com.google.maps.model.LatLng;
 @EnableWebMvc
 @SpringBootApplication
 @EnableAutoConfiguration
+//@ComponentScan({"com.eretailservice"})
+
 public class Application extends SpringBootServletInitializer{
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Application.class, args);

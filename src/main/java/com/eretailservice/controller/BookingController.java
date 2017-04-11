@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,9 @@ import com.eretailservice.repository.BookingRepository;
 
 @RestController
 @RequestMapping("/{userId}/bookmarks")
+@EnableJpaRepositories(
+		basePackages = {"com.eretailservice.repository"}
+	)
 class BookingController {
 
 	private final BookingRepository bookingRepository;
