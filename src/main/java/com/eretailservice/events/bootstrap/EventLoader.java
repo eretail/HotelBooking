@@ -66,7 +66,7 @@ public class EventLoader implements ApplicationListener<ContextRefreshedEvent> {
         eventRepository.save(getJobEvent);
 
         User tinRf = userRepository.findByUsername("tin");
-    	Calendar tinCal=new Calendar("tinCal", yinchun);    	
+    	Calendar tinCal=new Calendar("tinCal", tinRf);    	
     	CalendarEvent getTinRoofJobEvent = new CalendarEvent();
     	
     	getTinRoofJobEvent.setEventId("#0000001#");
@@ -79,7 +79,7 @@ public class EventLoader implements ApplicationListener<ContextRefreshedEvent> {
     	getTinRoofJobEvent.setEventDateTime(LocalDateTime.now());
     	getTinRoofJobEvent.setLocation("Atlanta");
 
-        String[] array2 = {"TinRoof","TinRoof's boss", "TinRoof's boss's boss"};
+        String[] array2 = {"TinRoof","TinRoof Manager", "TinRoof HR"};
         getTinRoofJobEvent.setAttendeeList(Stream.of(array2).collect(Collectors.toSet()));
         getTinRoofJobEvent.setReminderTime(LocalDateTime.now());
         getTinRoofJobEvent.setHasReminderSent(false);
