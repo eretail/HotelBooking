@@ -1,25 +1,28 @@
 package com.eretailservice.events.domain;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
+
+import org.springframework.data.jpa.repository.Temporal;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
 @Entity
-public class CalendarEvent {
+public class CalendarEvent implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -32,7 +35,8 @@ public class CalendarEvent {
     private String detailDescription;
     
     private String title; 
-    private LocalDateTime eventDateTime;
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    private Date eventDateTime;
     private String location;
     
     @ManyToOne
@@ -51,7 +55,9 @@ public class CalendarEvent {
     @ElementCollection(targetClass=String.class)
     private Set<String> attendeeList;
     
-    private LocalDateTime reminderTime;
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+//    @Temporal(TemporalType.DATE)
+    private Date reminderTime;
     private boolean hasReminderSent;
     
 	public Integer getId() {
@@ -97,10 +103,10 @@ public class CalendarEvent {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public LocalDateTime getEventDateTime() {
+	public Date getEventDateTime() {
 		return eventDateTime;
 	}
-	public void setEventDateTime(LocalDateTime eventDateTime) {
+	public void setEventDateTime(Date eventDateTime) {
 		this.eventDateTime = eventDateTime;
 	}
 	public String getLocation() {
@@ -115,10 +121,10 @@ public class CalendarEvent {
 	public void setAttendeeList(Set<String> attendeeList) {
 		this.attendeeList = attendeeList;
 	}
-	public LocalDateTime getReminderTime() {
+	public Date getReminderTime() {
 		return reminderTime;
 	}
-	public void setReminderTime(LocalDateTime reminderTime) {
+	public void setReminderTime(Date reminderTime) {
 		this.reminderTime = reminderTime;
 	}
 	public boolean isHasReminderSent() {

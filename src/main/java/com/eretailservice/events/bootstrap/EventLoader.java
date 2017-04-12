@@ -1,6 +1,8 @@
 package com.eretailservice.events.bootstrap;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -54,12 +56,16 @@ public class EventLoader implements ApplicationListener<ContextRefreshedEvent> {
         getJobEvent.setCalendar(yinchunCal);
         
         getJobEvent.setTitle("hiring");
-        getJobEvent.setEventDateTime(LocalDateTime.now());
+        getJobEvent.setEventDateTime(
+        		Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant())
+        		);
         getJobEvent.setLocation("Atlanta");
 
         String[] array = {"Yinchun","Yinchun's boss", "Yinchun's boss's boss"};
         getJobEvent.setAttendeeList(Stream.of(array).collect(Collectors.toSet()));
-        getJobEvent.setReminderTime(LocalDateTime.now());
+        getJobEvent.setReminderTime( 
+        		Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant())
+        		);
         getJobEvent.setHasReminderSent(false);
         
         calendarRepository.save(yinchunCal);
@@ -76,12 +82,16 @@ public class EventLoader implements ApplicationListener<ContextRefreshedEvent> {
     	getTinRoofJobEvent.setCalendar(tinCal);
         
     	getTinRoofJobEvent.setTitle("hiring");
-    	getTinRoofJobEvent.setEventDateTime(LocalDateTime.now());
+    	getTinRoofJobEvent.setEventDateTime(
+    		Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant())
+    	);
     	getTinRoofJobEvent.setLocation("Atlanta");
 
         String[] array2 = {"TinRoof","TinRoof Manager", "TinRoof HR"};
         getTinRoofJobEvent.setAttendeeList(Stream.of(array2).collect(Collectors.toSet()));
-        getTinRoofJobEvent.setReminderTime(LocalDateTime.now());
+        getTinRoofJobEvent.setReminderTime(
+        	Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant())
+        );
         getTinRoofJobEvent.setHasReminderSent(false);
         
         calendarRepository.save(tinCal);        
