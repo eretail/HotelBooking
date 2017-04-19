@@ -36,7 +36,7 @@ public class GeocodeService {
 	private String proxyuser;
 	private String proxypassword;
 
-	private String apikey;
+	private String apikey ="AIzaSyD7vnkhYbTs1oDx1mbH2QnYYBywOWdVNTM";
 
 	/**
 	 * initialize the Geo API Context with API key and request handler etc
@@ -48,8 +48,10 @@ public class GeocodeService {
 			Authenticator authenticator = new Authenticator(proxyuser, proxypassword);
 			requestHandler.setAuthenticator(authenticator);
 			InetSocketAddress address = new InetSocketAddress(proxyaddress, Integer.valueOf(proxyport));
+			
 			Proxy proxy = new Proxy(Proxy.Type.HTTP, address);
 			requestHandler.setProxy(proxy);
+			
 			context = new GeoApiContext(requestHandler);
 		} else {
 			context = new GeoApiContext();
@@ -75,6 +77,10 @@ public class GeocodeService {
 		return results[0];
 	}
 
+//	https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&
+//	origins=40.6655101,-73.89188969999998&destinations=40.6905615%2C-73.9976592%7C40.6905615%2C-73.9976592%7C40.6905615%2C-73.9976592%7C40.6905615%2C-73.9976592%7C40.6905615%2C-73.9976592%7C40.6905615%2C-73.9976592%7C40.659569%2C-73.933783%7C40.729029%2C-73.851524%7C40.6860072%2C-73.6334271%7C40.598566%2C-73.7527626%7C40.659569%2C-73.933783%7C40.729029%2C-73.851524%7C40.6860072%2C-73.6334271%7C40.598566%2C-73.7527626
+//	&key=AIzaSyD7vnkhYbTs1oDx1mbH2QnYYBywOWdVNTM
+	
 	/**
 	 * comma separated string formated address
 	 * 
@@ -84,6 +90,7 @@ public class GeocodeService {
 	private String getFormattedAddress(APlace shop) {
 		Address address = shop.getPlaceAddress();
 		StringBuilder formattedAddress = new StringBuilder();
+
 		if (Objects.nonNull(shop.getPlaceName())) {
 			formattedAddress.append(shop.getPlaceName()).append(",");
 		}
@@ -130,5 +137,4 @@ public class GeocodeService {
 	public void setProxy(boolean proxy) {
 		this.proxy = proxy;
 	}
-
 }

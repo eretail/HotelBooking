@@ -1,0 +1,162 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Search for up to 200 places with Radar Search</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <script src="http://maps.googleapis.com/maps/api/js" type="text/javascript"></script>           
+   </head>
+<body  th:fragment="content">
+  
+       <div class="jumbotron">
+          <div class="row text-center">
+			<div id="result" style="display:none"></div>
+			<div style="width:600px;height:400px" class="pull-left" id="map"/>
+			<div style="width:400px;height:400px" class="pull-right">
+				<form th:action="@{/map2business}" method="get" id="chick">
+					<input type="hidden" name="lo" value="2" id="lo" />
+					<input type="hidden" name="la" value="1" id="la" />
+					<div class="form-group">
+					  <label for="sel1" class="pull-left">events close to you:</label>
+					  <select class="form-control businessTypePullDown" id="sel1">
+					    <option value='hotel'>Hotel</option>
+					    <option value='hotel'>Shop</option>
+					    <option value='hotel'>Restaurant</option>
+					    <option value='hotel'>Hospital</option>
+					  </select>
+					  <select class="form-control distancePullDown" id="sel2">
+					    <option value='1'>1 mile</option>
+					    <option value='5'>5 mile</option>
+					    <option value='10'>10 mile</option>
+					    <option value='20'>20 mile</option>
+					  </select>
+					</div>
+				</form>
+  			</div>
+  		</div>
+  	</div>
+  	   
+    <script>
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+
+      var map;
+      var infoWindow;
+      var service;
+
+      function initMap() {
+         map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -33.867, lng: 151.206},
+          zoom: 15,
+          styles: [{
+            stylers: [{ visibility: 'simplified' }]
+          }, {
+            elementType: 'labels',
+            stylers: [{ visibility: 'off' }]
+          }]
+        });
+
+        infoWindow = new google.maps.InfoWindow();
+        service = new google.maps.places.PlacesService(map);
+
+        // The idle event is a debounced event, so we can query and listen without
+        // throwing too many requests at the server.
+        map.addListener('idle', performSearch);
+       }
+
+      function landingMap() {
+          map = new google.maps.Map(document.getElementById('map'), {
+           center: {lat: -33.867, lng: 151.206},
+           zoom: 15,
+           styles: [{
+             stylers: [{ visibility: 'simplified' }]
+           }, {
+             elementType: 'labels',
+             stylers: [{ visibility: 'off' }]
+           }]
+         });
+
+         infoWindow = new google.maps.InfoWindow();
+         service = new google.maps.places.PlacesService(map);
+
+         // The idle event is a debounced event, so we can query and listen without
+         // throwing too many requests at the server.
+         map.addListener('idle', performSearch);
+        }      
+      
+      function performSearch() {
+        var request = {
+          bounds: map.getBounds(),
+          keyword: 'best view'
+        };
+        service.radarSearch(request, callback);
+      }
+
+      function callback(results, status) {
+        if (status !== google.maps.places.PlacesServiceStatus.OK) {
+          console.error(status);
+          return;
+        }
+        for (var i = 0, result; result = results[i]; i++) {
+          addMarker(result);
+        }
+      }
+
+      function addMarker(place) {
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location,
+          icon: {
+            url: 'https://developers.google.com/maps/documentation/javascript/images/circle.png',
+            anchor: new google.maps.Point(10, 10),
+            scaledSize: new google.maps.Size(10, 17)
+          }
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          service.getDetails(place, function(result, status) {
+            if (status !== google.maps.places.PlacesServiceStatus.OK) {
+              console.error(status);
+              return;
+            }
+            infoWindow.setContent(result.name);
+            infoWindow.open(map, marker);
+          });
+        });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7vnkhYbTs1oDx1mbH2QnYYBywOWdVNTM&amp;callback=initMap&amp;libraries=places,visualization;" async='defer'></script>
+    <script>
+		(function () {
+		
+			  var filterPullDown = function() {
+				  
+			         $('#chick').submit();
+			    }
+			  
+			    var flag = false;
+			    $(".distancePullDown").click(function () {
+			    	
+			        if (flag) {
+			            filterPullDown()
+			        }
+			        flag = !flag;
+			    });
+			    $(".distancePullDown").focusout(function () {
+			        flag = false;
+			    });
+			}());
+	</script>
+  </body>
+</html>

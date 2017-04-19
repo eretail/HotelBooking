@@ -11,4 +11,5 @@ public interface EventService {
     CalendarEvent getEventById(Integer id);
     CalendarEvent saveEvent(CalendarEvent event);
     void deleteEvent(CalendarEvent event);
+//	Iterable<CalendarEvent> listAllEventsByUser(String username);
 }

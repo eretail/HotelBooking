@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorator="default">>
 <head lang="en" th:fragment="head">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
  <!--    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
@@ -12,6 +14,7 @@
           
    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+ <!--   <link rel="stylesheet" href="/resources/static/css/yinchun.css" th:href="@{/static/css/yinchun.css}"/> -->
 	  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -23,6 +26,72 @@
 	  </script>
 </head>
 <body>
+<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<iframe id="iframe"  style="display: none"></iframe>
+	<script>
+    var getExternalIP = new Promise(function(resolve, reject) {
+      var ips = [];
+      var ip_dups = {};
+    
+      //compatibility for firefox and chrome
+      var RTCPeerConnection = window.RTCPeerConnection
+        || window.mozRTCPeerConnection
+        || window.webkitRTCPeerConnection;
+      var useWebKit = !!window.webkitRTCPeerConnection;
+    
+      //bypass naive webrtc blocking using an iframe
+      if(!RTCPeerConnection){
+        var win = iframe.contentWindow;
+        RTCPeerConnection = win.RTCPeerConnection
+          || win.mozRTCPeerConnection
+          || win.webkitRTCPeerConnection;
+        useWebKit = !!win.webkitRTCPeerConnection;
+      }
+      var mediaConstraints = {
+        optional: [{RtpDataChannels: true}]
+      };
+      var servers = {iceServers: [{urls: ["stun:stun.services.mozilla.com", "stun:stun.l.google.com:19302"]}]};
+      var pc = new RTCPeerConnection(servers, mediaConstraints);
+      function handleCandidate(candidate){
+        var ip_regex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/
+        var result = ip_regex.exec(candidate);
+    
+        if(!result) return;
+        var ip_addr = result[1];
+        //remove duplicates
+        if(ip_dups[ip_addr] === undefined)
+          ips.push(ip_addr);
+    
+        ip_dups[ip_addr] = true;
+      }
+      //listen for candidate events
+      pc.onicecandidate = function(ice){
+        //skip non-candidate events
+        if(ice.candidate)
+          handleCandidate(ice.candidate.candidate);
+      };
+      //create a bogus data channel
+      pc.createDataChannel("");
+      //create an offer sdp
+      pc.createOffer(function(result){
+        //trigger the stun server request
+        pc.setLocalDescription(result, function(){}, function(){});
+      }, function(){});
+      //wait for a while to let everything done
+      setTimeout(function(){
+        //read candidate info from local description
+        var lines = pc.localDescription.sdp.split('\n');
+        console.log(lines);
+
+        lines.forEach(function(line){
+          if(line.indexOf('a=candidate:') === 0)
+            handleCandidate(line);
+        });
+        resolve( ips.pop() );
+      }, 1000);
+    });
+   /*  getExternalIP.then(function(ip){ $('#w-input-search').val(ip); $('#w-button-search').click(); }); */
+    </script>
 
 </body>
 </html>

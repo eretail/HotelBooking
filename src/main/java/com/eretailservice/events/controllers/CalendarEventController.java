@@ -5,8 +5,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
+//import org.springframework.beans.propertyeditors.CustomDateEditor;
+
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,33 +16,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.eretailservice.auth.model.User;
+import com.eretailservice.auth.service.UserService;
 import com.eretailservice.events.domain.CalendarEvent;
 import com.eretailservice.events.services.EventService;
 
 @Controller
 public class CalendarEventController {
-
-    private EventService eventService;
-
     @Autowired
-    public void setEventService(EventService eventService) {
+	private EventService eventService;
+
+/*	@Autowired
+    private UserService userService;
+	String username = SecurityContextHolder.getContext().getAuthentication().getName();
+	User user = userService.findByUsername(username);
+*/
+/*    public void setEventService(EventService eventService) {
         this.eventService = eventService;
     }
+*/	
 
-   /* @InitBinder     
-    public void initBinder(WebDataBinder binder){
-         binder.registerCustomEditor(   Date.class,     
-                             new CustomDateEditor(new SimpleDateFormat("MM/dd/yyyy"), true, 10));   
-    }*/
-    
     @RequestMapping(value = "/events", method = RequestMethod.GET)
     public String list(Model model){
-        model.addAttribute("events", eventService.listAllEvents());
+      model.addAttribute("events", eventService.listAllEvents());
+//    	model.addAttribute("events", eventService.listAllEventsByUser(username));
+    	
         return "events";
     }
     
     @RequestMapping(value = "/events/range", method = RequestMethod.POST)
-    
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     public String listInRange(Model model, @RequestParam("fromDate") String from, @RequestParam("toDate") String to){
     	SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
@@ -53,6 +57,7 @@ public class CalendarEventController {
 
 	    	Date fromDate = new Date(parsedFrom.getTime());
 	        Date toDate = new Date(parsedTo.getTime());
+	        
 	        model.addAttribute("events", eventService.listEventsInRange(fromDate, toDate));
 		} catch (ParseException e) {
 			e.printStackTrace();

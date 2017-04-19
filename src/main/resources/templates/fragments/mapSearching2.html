@@ -1,0 +1,123 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <title>Search for up to 200 places with Radar Search</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <script src="http://maps.googleapis.com/maps/api/js" type="text/javascript"></script>           
+   </head>
+<body  th:fragment="content">
+       <div class="jumbotron">
+          <div class="row text-center">
+			<div id="result" style="display:none"></div>
+			<div style="width:600px;height:400px" class="pull-left" id="map"/>
+			<div style="width:400px;height:400px" class="pull-right">
+				<form th:action="@{/map2business}" method="get" id="chick">
+					<input type="hidden" name="lo" value="2" id="lo" />
+					<input type="hidden" name="la" value="1" id="la" />
+					<div class="form-group">
+					  <label for="sel1" class="pull-left">events close to you:</label>
+					  <select class="form-control businessTypePullDown" id="sel1">
+					    <option value='hotel'>Hotel</option>
+					    <option value='store'>Shop</option>
+					    <option value='restaurant'>Restaurant</option>
+					    <option value='hospital'>Hospital</option>
+					  </select>
+					  <select class="form-control distancePullDown" id="sel2">
+					    <option value='1'>1 mile</option>
+					    <option value='5'>5 mile</option>
+					    <option value='10'>10 mile</option>
+					    <option value='20'>20 mile</option>
+					  </select>
+					</div>
+				</form>
+  			</div>
+  		</div>
+  	</div>
+  	   
+<script th:inline="javascript">
+    /*<![CDATA[*/
+	    var map;
+	    var infowindow;
+	
+	    function initMap() {
+	      var pyrmont = {lat: -33.867, lng: 151.195};
+	
+	      map = new google.maps.Map(document.getElementById('map'), {
+	        center: pyrmont,
+	        zoom: 15
+	      });
+	
+	      infowindow = new google.maps.InfoWindow();
+	      var service = new google.maps.places.PlacesService(map);
+	      service.nearbySearch({
+	        location: pyrmont,
+	        radius: 500,
+	        type: ['school']
+	      }, callback);
+	    }
+	
+	    function callback(results, status) {
+	      if (status === google.maps.places.PlacesServiceStatus.OK) {
+	        for (var i = 0; i < results.length; i++) {
+	          createMarker(results[i]);
+	        } 
+	      }
+	    }
+	
+	    function createMarker(place) {
+	      var placeLoc = place.geometry.location;
+	      var marker = new google.maps.Marker({
+	        map: map,
+	        position: place.geometry.location
+	      });
+	
+	      google.maps.event.addListener(marker, 'click', function() {
+	        infowindow.setContent(place.name);
+	        infowindow.open(map, this);
+	      });
+	    }   
+	    
+	    /*]]>*/
+	</script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7vnkhYbTs1oDx1mbH2QnYYBywOWdVNTM&amp;callback=initMap&amp;libraries=places,visualization;" async='defer'></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7vnkhYbTs1oDx1mbH2QnYYBywOWdVNTM&amp;libraries=places&amp;callback=initMap" async='defer'></script> -->
+<!-- https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&rankby=distance&types=food&key=YOUR_API_KEY -->
+<!-- https://maps.googleapis.com/maps/api/place/textsearch/json?query=123+main+street&location=42.3675294,-71.186966&radius=10000&key=YOUR_API_KEY -->
+<!-- https://maps.googleapis.com/maps/api/place/radarsearch/output?parameters -->
+<!-- https://maps.googleapis.com/maps/api/place/radarsearch/json?location=48.859294,2.347589&radius=5000&type=cafe&keyword=vegetarian&key=YOUR_API_KEY -->
+    <script>
+		(function () {
+		
+			  var filterPullDown = function() {
+				  
+			         $('#chick').submit();
+			    }
+			  
+			    var flag = false;
+			    $(".distancePullDown").click(function () {
+			    	
+			        if (flag) {
+			            filterPullDown()
+			        }
+			        flag = !flag;
+			    });
+			    $(".distancePullDown").focusout(function () {
+			        flag = false;
+			    });
+			}());
+	</script>
+  </body>
+</html>

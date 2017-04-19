@@ -11,19 +11,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
-import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
 @Entity
 public class CalendarEvent implements Serializable {
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2987824280783084944L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
@@ -56,7 +58,6 @@ public class CalendarEvent implements Serializable {
     private Set<String> attendeeList;
     
     @DateTimeFormat(pattern = "MM/dd/yyyy")
-//    @Temporal(TemporalType.DATE)
     private Date reminderTime;
     private boolean hasReminderSent;
     

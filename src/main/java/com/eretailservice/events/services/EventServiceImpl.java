@@ -1,13 +1,16 @@
 package com.eretailservice.events.services;
 
+import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.eretailservice.auth.model.User;
+import com.eretailservice.auth.service.UserService;
 import com.eretailservice.events.domain.CalendarEvent;
 import com.eretailservice.events.repositories.CalendarEventRepository;
 
@@ -25,9 +28,12 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findAll();
     }
     
+/*    @Override
+    public Iterable<CalendarEvent> listAllEventsByUser(String username){
+    	return eventRepository.listAllEventsByUser(username);
+    };*/
+    
     public Iterable<CalendarEvent> findBetween(Date from, Date to) {
-//		LocalDateTime from2 = asLocalDateTime(from, ZoneId.systemDefault());
-//		LocalDateTime to2 = asLocalDateTime(to, ZoneId.systemDefault());
 		return eventRepository.findBetween(from, to);
 	};
 	
@@ -47,8 +53,6 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public Iterable<CalendarEvent> listEventsInRange(Date from, Date to) {
-//		LocalDateTime from2 = asLocalDateTime(from, ZoneId.systemDefault());
-//		LocalDateTime to2 = asLocalDateTime(to, ZoneId.systemDefault());
 		return eventRepository.findBetween(from, to);
 	};
 	

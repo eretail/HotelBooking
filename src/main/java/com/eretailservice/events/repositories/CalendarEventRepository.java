@@ -12,4 +12,9 @@ public interface CalendarEventRepository extends JpaRepository<CalendarEvent, In
 	@Query("from CalendarEvent ce where not(ce.eventDateTime < :from or ce.eventDateTime > :to)")
 	public Iterable<CalendarEvent> findBetween(@Param("from") @DateTimeFormat(pattern = "MM/dd/yyyy") Date start, 
 			@Param("to") @DateTimeFormat(pattern = "MM/dd/yyyy") Date end);
+	
+//	@Query("from CalendarEvent ce inner join fetch ce.Calendar c inner join fetch c.User u where u.username = :username")
+//	@Query("from User u join fetch u.Calendar c join fetch CalendarEvent ce where u.username = :username")
+//	public Iterable<CalendarEvent> listAllEventsByUser(@Param("username") String username);
+	
 }

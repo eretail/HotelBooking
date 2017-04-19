@@ -3,20 +3,38 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
         <title>User Login</title>
+       <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
     </head>
     <body>
-        <div th:if="${param.error}">
-            Invalid username and password.
-        </div>
-        <div th:if="${param.logout}">
-            You have been logged out.
-        </div>
-        <form th:action="@{/login}" method="post">
-            <div><label> User Name : <input type="text" name="username"/> </label></div>
-            <div><label> Password: <input type="password" name="password"/> </label></div>
-            <!-- <div><input type="submit" value="Sign In"/></div> -->
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
-            <!-- <h4 class="text-center"><a th:href="@{registration}">Create an account</a></h4> -->
-        </form>
+
+<div class="container container-table">
+    <div class="row horizontal-center-row">
+            <div th:if="${param.error}">
+	            Invalid username and password.
+	        </div>
+	        <div th:if="${param.logout}">
+	            You have been logged out.
+	        </div>
+
+    		<div class="row">	        
+	        <form th:action="@{/login}" method="post">
+			<div class="input-group col-md-* col-md-offset-4">
+				<label class="control-label">User Name:</label>
+				<input type="text" class="form-control col-sm-10" placeholder="username" name="username" id="username"/>
+			</div>
+			<div class="input-group col-md-* col-md-offset-4">
+				<label class="control-label">Password:</label>
+				<input type="text" class="form-control col-sm-10" placeholder="password" name="password" id="password"/>
+			</div>
+			<div class="form-group col-md-offset-4 row top-buffer" style="margin-top:20px;float:left">
+				<button class="btn btn-default col-md-offset-4" type="submit">Log In</button>
+		<!-- 		<button class="btn btn-default disabled" type="submit">Sign Up</button> -->
+			</div>
+
+	        </form>
+
+	    </div>
+	</div>
+ </div>
     </body>
 </html>
