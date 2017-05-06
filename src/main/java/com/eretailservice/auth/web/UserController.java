@@ -40,7 +40,6 @@ public class UserController {
         }
 
         userService.save(userForm);
-
         securityService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
 
         return "redirect:/welcome";

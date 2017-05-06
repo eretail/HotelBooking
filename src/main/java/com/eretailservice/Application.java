@@ -1,7 +1,18 @@
 package com.eretailservice;
 
+import java.io.IOException;
 import java.util.Arrays;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,12 +21,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.eretailservice.model.APlace;
@@ -79,7 +90,7 @@ public class Application extends SpringBootServletInitializer{
 						});
 	}
 	
-	/*// CORS
+	// CORS
 	@Bean
 	FilterRegistrationBean corsFilter(
 			@Value("${tagit.origin:http://localhost:9000}") String origin) {
@@ -112,5 +123,5 @@ public class Application extends SpringBootServletInitializer{
 			public void destroy() {
 			}
 		});
-	}*/
+	}
 }

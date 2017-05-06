@@ -35,13 +35,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                     .permitAll();
         
-        http.csrf().disable();
+//        http.csrf().disable();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
     	auth.inMemoryAuthentication().withUser("li").password("yinchun").roles("USER");
-    	auth.inMemoryAuthentication().withUser("tin").password("roof").roles("USER");
+    	auth.inMemoryAuthentication().withUser("li").password("baba").roles("USER");
     	auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 }

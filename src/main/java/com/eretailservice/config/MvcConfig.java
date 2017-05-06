@@ -35,7 +35,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-/*        registry.addViewController("/home").setViewName("home");
+/*      registry.addViewController("/home").setViewName("home");
         registry.addViewController("/").setViewName("home");
         registry.addViewController("/welcome").setViewName("welcome");
         registry.addViewController("/login").setViewName("login");
@@ -46,9 +46,9 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
  // equivalents for <mvc:resources/> tags
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(31556926);
-//        registry.addResourceHandler("/img/**").addResourceLocations("/img/").setCachePeriod(31556926);
-//        registry.addResourceHandler("/js/**").addResourceLocations("/js/").setCachePeriod(31556926);
+//      registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(31556926);
+//      registry.addResourceHandler("/img/**").addResourceLocations("/img/").setCachePeriod(31556926);
+//      registry.addResourceHandler("/js/**").addResourceLocations("/js/").setCachePeriod(31556926);
     	registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
